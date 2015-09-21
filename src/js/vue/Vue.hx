@@ -44,20 +44,22 @@ typedef ComponentOptions<T> = {
 	?mixins: { },
 	?name:String, 		// only respected when used in Vue.extend().
 }
+
+typedef VueConfig = {
+	debug: Bool, // true, enable debug mode. 
+	strict: Bool, // false,  enable strict mode. 
+	prefix: String, // 'v-', attribute prefix for directives.
+	delimiters: Array<String>, // ['{{', '}}'], interpolation delimiters for HTML interpolations, add 1 extra outer-most character.
+	silent: Bool, // false suppress warnings?
+	interpolate: Bool, // true, interpolate mustache bindings?
+	async: Bool, // true, use async updates (for directives & watchers)?
+	proto: Bool, // true, allow altering observed Array's prototype chain?
+}
  
 @:native('Vue')
 extern class Vue<T> {
 	
-	static var config: {
-		debug: Bool, // true, enable debug mode. 
-		strict: Bool, // false,  enable strict mode. 
-		prefix: String, // 'v-', attribute prefix for directives.
-		delimiters: Array<String>, // ['{{', '}}'], interpolation delimiters for HTML interpolations, add 1 extra outer-most character.
-		silent: Bool, // false suppress warnings?
-		interpolate: Bool, // true, interpolate mustache bindings?
-		async: Bool, // true, use async updates (for directives & watchers)?
-		proto: Bool, // true, allow altering observed Array's prototype chain?
-	};
+	static var config(default,null):VueConfig;
 	
 	@:native('$el')
 	var el:HtmlElement;
@@ -73,9 +75,9 @@ extern class Vue<T> {
 	@:native('$children')
 	var children:Array<Vue<{}>>;
 	@:native('$')
-	var vrefs: { };
+	var vrefs: Dynamic<Vue<Dynamic>>;
 	@:native('$$')
-	var velements: { };
+	var velements: Dynamic;
 	
 	// for instances created with v-repeat only
 	@:native('$index')
