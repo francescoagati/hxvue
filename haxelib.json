@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": ["javascript", "vuejs", "vue", "vue.js", "frontend", "reactive"],
 	"description": "Bindings for vuejs frontend library.",
-	"version": "1.0",
+	"version": "1.0.0",
 	"classPath": "src",
 	"releasenote": "First",
 	"contributors": ["prog4mr"]
