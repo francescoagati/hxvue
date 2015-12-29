@@ -3,3 +3,5 @@
 -js builds/test.js
 -main Test
 -lib thx.core tink_macro
+-dce full
+-D analyzer
