@@ -102,7 +102,7 @@ extern class Vue<T> {
 	
 	// Data
 	@:native('$watch')
-	function watch(expr:EitherType<String, Void->Dynamic>, callback:Dynamic->Dynamic->Void, ?options: { immediate:Bool } ):Void;
+	function watch(expr:EitherType<String, Void->Dynamic>, callback:Dynamic->Dynamic->Void, ?options: { ?deep:Bool ,?immediate:Bool } ):Void;
 	@:native('$get')
 	function get(key:String):Dynamic;
 	@:native('$set')
