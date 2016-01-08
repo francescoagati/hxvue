@@ -1,7 +1,7 @@
 import js.vue.Vue;
 //import vue.macro.Builder;
 //import TestComponent;
-
+/*
 
 typedef Data = {
   b:Bool,
@@ -23,6 +23,7 @@ class ComponentBase<T> extends Vue<T> implements vue.macro.IComponent<T> {
 @:template('
 
   <div class="container" @click="click2">
+    <pippa></pippa>
     <div
       class="well  animated"
       v-show="b"
@@ -56,19 +57,66 @@ class ComponentA  extends ComponentBase<Data> {
       this.data.b = true;
       untyped this.data.a = this.data.a+1;
     }
-
   }
-
 }
 
+@:keep
+@:template('
+  <span>HELLO</span>
+')
+class ComponentB  extends Vue<Dynamic> implements vue.macro.IComponent<Dynamic> {
+  public function new(data) {
+    var vue_config = get_vue_config(data);
+    super(vue_config);
+  }
+}
+*/
 
+
+class A extends js.vue.Vue<Dynamic> {
+
+  public function new() {
+    var properties = {
+      el: '#demo',
+      template:"
+        <div>{{a+2}}</div>
+        <div>
+            <my-pippa></my-pippa>
+        </div>
+      ",
+      data: {a:1}
+    };
+    super(properties);
+  }
+}
+
+@:keep
+class B extends js.vue.Vue<{b:Int}> {
+
+  public function click(e) {
+    data.b = data.b + 1;
+  }
+  public static var template = '
+    <div v-on:click="click">{{b+1}}</div>
+  ';
+
+  public static var data_init:Dynamic = untyped {b:2};
+
+}
 
 
 class Test {
 
   static function main() {
-
-
+    js.vue.Vue.component('my-pippa',Vue.extend({
+      data:untyped function() return  B.data_init,
+      template:B.template,
+      methods:{
+        click:untyped B.prototype.click
+      }
+    }));
+    new A();
+/*
             Vue.transition('fade', {
               css: false,
               enter: function (el, done) {
@@ -85,9 +133,11 @@ class Test {
                 untyped $(el).stop();
               }
             });
+*/
 
-
+/*    Vue.component('pippa',ComponentB);
     new ComponentA({b:false,a:1,list:[1,2,3,4,5,6,7,8,9,10]});
+*/
 
 
   }

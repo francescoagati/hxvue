@@ -29,7 +29,7 @@ class Builder {
       return try {
         cls.get().meta.get().getValues(meta)[0][0].getValue();
       } catch (e:Dynamic) {
-        null;
+        "";
       }
     }
 
@@ -75,15 +75,13 @@ class Builder {
   macro public static function build():Array<Field>  {
 
     var cls = Context.getLocalClass();
-    trace(Context.getLocalClass().get().meta);
-    if (cls.get().name == 'Component') return null;
+    trace(cls.get().interfacesAsStrings());
+    trace(cls.get().name);
+    if (cls.get().name == 'ComponentBase') return null;
     var fields = Context.getBuildFields();
 
 
     var element = get_one_param(cls,':el');
-
-    if (element == null) return null;
-
     var template = get_one_param(cls,':template').clean_template();
 
 
@@ -94,9 +92,7 @@ class Builder {
 
     var new_fields = (macro class  {
 
-
-      inline function get_vue_config(?data) {
-
+      function get_vue_config(?data) {
 
         var methods = untyped {};
         $b{methods};
@@ -107,8 +103,8 @@ class Builder {
         var watched:Dynamic = untyped {};
         $b{watched};
 
-        return  {
-          el: $v{element},
+        return untyped {
+          el:  $v{element},
           template: $v{template},
           data: data,
           methods:methods,
