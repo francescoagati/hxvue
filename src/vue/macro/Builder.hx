@@ -1,5 +1,6 @@
 package vue.macro;
 
+using StringTools;
 #if (macro || neko)
   import haxe.macro.Expr;
   import haxe.macro.Context;
@@ -83,7 +84,6 @@ class Builder {
 
     var element = get_one_param(cls,':el');
     var template = get_one_param(cls,':template').clean_template();
-
 
     var methods = process_methods(fields);
     var computed = process_computed(fields);

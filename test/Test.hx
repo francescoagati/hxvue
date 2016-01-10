@@ -1,4 +1,6 @@
 import js.vue.Vue;
+//import vue.macro.builder.Component;
+import a.b.Foo;
 //import vue.macro.Builder;
 //import TestComponent;
 /*

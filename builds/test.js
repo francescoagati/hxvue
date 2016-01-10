@@ -6,7 +6,7 @@ function $extend(from, fields) {
 	return proto;
 }
 var A = function() {
-	var properties = { el : "#demo", template : "\n        <div>{{a+2}}</div>\n        <div>\n            <my-pippa></my-pippa>\n        </div>\n      ", data : { a : 1}};
+	var properties = { el : "#demo", template : "\r\n        <div>{{a+2}}</div>\r\n        <div>\r\n            <my-pippa></my-pippa>\r\n        </div>\r\n      ", data : { a : 1}};
 	Vue.call(this,properties);
 };
 A.__super__ = Vue;
@@ -28,7 +28,23 @@ Test.main = function() {
 	}, template : B.template, methods : { click : B.prototype.click}}));
 	new A();
 };
-B.template = "\n    <div v-on:click=\"click\">{{b+1}}</div>\n  ";
+var a_b_Foo = function(options) {
+	Vue.call(this,options);
+};
+a_b_Foo.__super__ = Vue;
+a_b_Foo.prototype = $extend(Vue.prototype,{
+	increment: function(e) {
+		this.$data.counter = this.$data.counter + 1;
+	}
+});
+var cls = a_b_Foo;
+var methods = { };
+methods.increment = cls.prototype.increment;
+Vue.component("my-component",Vue.extend({ data : function() {
+	return cls.data_init;
+}, template : "<div v-on:click='increment'>{{counter}}</div>", methods : methods}));
+B.template = "\r\n    <div v-on:click=\"click\">{{b+1}}</div>\r\n  ";
 B.data_init = { b : 2};
+a_b_Foo.data_init = { counter : 0};
 Test.main();
 })(typeof console != "undefined" ? console : {log:function(){}});
